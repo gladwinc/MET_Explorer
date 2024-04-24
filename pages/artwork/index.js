@@ -5,6 +5,7 @@ import Error from "next/error";
 import { Row, Col, Card, Pagination } from "react-bootstrap";
 import ArtworkCard from "@/components/ArtworkCard";
 import validObjectIDList from "@/public/data/validObjectIDList";
+import Head from "next/head";
 
 const PER_PAGE = 12;
 export default function Artwork() {
@@ -55,6 +56,9 @@ export default function Artwork() {
 
   return (
     <>
+      <Head>
+        <title>Search Query</title>
+      </Head>
       <Row className="gy-4">
         {artworkList.length > 0 ? (
           artworkList[page - 1].map((currentObjectID) => (

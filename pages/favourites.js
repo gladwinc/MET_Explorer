@@ -1,6 +1,7 @@
 import { Row, Col, Card } from "react-bootstrap";
 import { useAtom } from "jotai";
 import { favouritesAtom } from "@/store";
+import Head from "next/head";
 import ArtworkCard from "@/components/ArtworkCard";
 
 export default function Favourites() {
@@ -8,6 +9,9 @@ export default function Favourites() {
 
   return (
     <>
+      <Head>
+        <title>Favourites</title>
+      </Head>
       <Row className="gy-4">
         {favouritesList.length > 0 ? (
           favouritesList.map((currentObjectID) => (

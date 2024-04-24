@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { searchHistoryAtom } from "@/store";
+import Head from "next/head";
 
 export default function AdvancedSearch() {
   const router = useRouter();
@@ -41,76 +42,81 @@ export default function AdvancedSearch() {
   };
 
   return (
-    <Form onSubmit={handleSubmit(submitForm)}>
-      <Row>
-        <Col>
-          <Form.Group className="mb-3">
-            <Form.Label>Search Query</Form.Label>
-            <Form.Control
-              type="text"
-              {...register("query", { required: true })}
-              className={errors.query ? "is-invalid" : ""}
+    <>
+      <Head>
+        <title>Advanced Search</title>
+      </Head>
+      <Form onSubmit={handleSubmit(submitForm)}>
+        <Row>
+          <Col>
+            <Form.Group className="mb-3">
+              <Form.Label>Search Query</Form.Label>
+              <Form.Control
+                type="text"
+                {...register("query", { required: true })}
+                className={errors.query ? "is-invalid" : ""}
+              />
+              {errors.q && (
+                <div className="invalid-feedback">This field is required.</div>
+              )}
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={4}>
+            <Form.Label>Search By</Form.Label>
+            <Form.Select className="mb-3" {...register("searchBy")}>
+              <option value="title">Title</option>
+              <option value="tags">Tags</option>
+              <option value="artistOrCulture">Artist or Culture</option>
+            </Form.Select>
+          </Col>
+          <Col md={4}>
+            <Form.Group className="mb-3">
+              <Form.Label>Geo Location</Form.Label>
+              <Form.Control type="text" {...register("geoLocation")} />
+              <Form.Text className="text-muted">
+                Case Sensitive String (ie "Europe", "France", "Paris", "China",
+                "New York", etc.), with multiple values separated by the |
+                operator
+              </Form.Text>
+            </Form.Group>
+          </Col>
+          <Col md={4}>
+            <Form.Group className="mb-3">
+              <Form.Label>Medium</Form.Label>
+              <Form.Control type="text" {...register("medium")} />
+              <Form.Text className="text-muted">
+                Case Sensitive String (ie: "Ceramics", "Furniture", "Paintings",
+                "Sculpture", "Textiles", etc.), with multiple values separated
+                by the | operator
+              </Form.Text>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Form.Check
+              type="checkbox"
+              label="Highlighted"
+              {...register("isHighlight")}
             />
-            {errors.q && (
-              <div className="invalid-feedback">This field is required.</div>
-            )}
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={4}>
-          <Form.Label>Search By</Form.Label>
-          <Form.Select className="mb-3" {...register("searchBy")}>
-            <option value="title">Title</option>
-            <option value="tags">Tags</option>
-            <option value="artistOrCulture">Artist or Culture</option>
-          </Form.Select>
-        </Col>
-        <Col md={4}>
-          <Form.Group className="mb-3">
-            <Form.Label>Geo Location</Form.Label>
-            <Form.Control type="text" {...register("geoLocation")} />
-            <Form.Text className="text-muted">
-              Case Sensitive String (ie "Europe", "France", "Paris", "China",
-              "New York", etc.), with multiple values separated by the |
-              operator
-            </Form.Text>
-          </Form.Group>
-        </Col>
-        <Col md={4}>
-          <Form.Group className="mb-3">
-            <Form.Label>Medium</Form.Label>
-            <Form.Control type="text" {...register("medium")} />
-            <Form.Text className="text-muted">
-              Case Sensitive String (ie: "Ceramics", "Furniture", "Paintings",
-              "Sculpture", "Textiles", etc.), with multiple values separated by
-              the | operator
-            </Form.Text>
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Form.Check
-            type="checkbox"
-            label="Highlighted"
-            {...register("isHighlight")}
-          />
-          <Form.Check
-            type="checkbox"
-            label="Currently on View"
-            {...register("isOnView")}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <br />
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Col>
-      </Row>
-    </Form>
+            <Form.Check
+              type="checkbox"
+              label="Currently on View"
+              {...register("isOnView")}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <br />
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    </>
   );
 }
